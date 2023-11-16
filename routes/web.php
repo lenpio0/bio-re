@@ -3,7 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\ContentController;
+use App\Http\Middleware\Authenticate;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,18 +16,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Index', [
-        'canLogin' => Route::has('login'),
-    ]);
-});
+Route::get('/', [ContentController::class, 'show']);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+Route::post('admin/{id}', [
+    ContentController::class,
+    'store'
+])->name('content.store');
+
+Route::middleware(['auth'])->group(function () {
+Route::get('admin', [
+    ContentController::class,
+    'index'
+])->name('content.index');
 });

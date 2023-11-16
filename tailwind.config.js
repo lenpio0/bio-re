@@ -16,6 +16,9 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'lora': 'Lora',
+                'hind': 'Hind Madurai',
+                'montserrat': 'Montserrat'
             },
             colors: {
                 'black-text': '#403233',
